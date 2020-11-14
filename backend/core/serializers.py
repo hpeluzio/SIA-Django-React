@@ -37,12 +37,17 @@ class SalaSerializer(serializers.ModelSerializer):
 
 
 class AvaliadorSerializer(serializers.ModelSerializer):
+
+    departamento_id = DepartamentoSerializer()
+
     class Meta:
         model = Avaliador
         fields = '__all__'
 
 
 class TrabalhoSerializer(serializers.ModelSerializer):
+
+    ano_id = AnoSerializer()
 
     class Meta:
         model = Trabalho
