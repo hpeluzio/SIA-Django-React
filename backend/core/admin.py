@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from core.models import (Departamento, Ano, Sala,
-                         Avaliador, Trabalho, TrabalhoAutor)
+                         Avaliador, Trabalho, TrabalhoAutor, Sessao,
+                         Avaliacao, AvaliadorAvaliacao)
 
 
 @admin.register(Departamento)
@@ -31,5 +32,20 @@ class TrabalhoAdmin(admin.ModelAdmin):
 
 @admin.register(TrabalhoAutor)
 class TrabalhoAutorAdmin(admin.ModelAdmin):
-    # list_display = [f.name for f in TrabalhoAutor._meta.fields]
-    list_display = ('trabalho_id', 'autor')
+    list_display = [f.name for f in TrabalhoAutor._meta.fields]
+    # list_display = ('trabalho_id', 'autor')
+
+
+@admin.register(Sessao)
+class SessaoAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in Sessao._meta.fields]
+
+
+@admin.register(Avaliacao)
+class AvaliacaoAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in Avaliacao._meta.fields]
+
+
+@admin.register(AvaliadorAvaliacao)
+class AvaliadorAvaliacaoAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in AvaliadorAvaliacao._meta.fields]

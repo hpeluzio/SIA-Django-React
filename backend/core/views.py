@@ -4,9 +4,11 @@ from rest_framework import permissions
 from core.serializers import UserSerializer, GroupSerializer
 
 from core.models import (Departamento, Ano, Sala,
-                         Avaliador, Trabalho, TrabalhoAutor)
+                         Avaliador, Trabalho, TrabalhoAutor,
+                         Sessao, Avaliacao, AvaliadorAvaliacao)
 from core.serializers import (DepartamentoSerializer, AnoSerializer, SalaSerializer,
-                              AvaliadorSerializer, TrabalhoSerializer, TrabalhoAutorSerializer)
+                              AvaliadorSerializer, TrabalhoSerializer, TrabalhoAutorSerializer, SessaoSerializer,
+                              AvaliacaoSerializer, AvaliadorAvaliacaoSerializer)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -49,3 +51,18 @@ class TrabalhoViewSet(viewsets.ModelViewSet):
 class TrabalhoAutorViewSet(viewsets.ModelViewSet):
     queryset = TrabalhoAutor.objects.all()
     serializer_class = TrabalhoAutorSerializer
+
+
+class SessaoViewSet(viewsets.ModelViewSet):
+    queryset = Sessao.objects.all()
+    serializer_class = SessaoSerializer
+
+
+class AvaliacaoViewSet(viewsets.ModelViewSet):
+    queryset = Avaliacao.objects.all()
+    serializer_class = AvaliacaoSerializer
+
+
+class AvaliadorAvaliacaoViewSet(viewsets.ModelViewSet):
+    queryset = AvaliadorAvaliacao.objects.all()
+    serializer_class = AvaliadorAvaliacaoSerializer

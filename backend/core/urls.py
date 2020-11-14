@@ -4,7 +4,8 @@ from rest_framework import routers
 
 from core.views import UserViewSet, GroupViewSet
 from core.views import (DepartamentoViewSet, AnoViewSet, SalaViewSet,
-                        AvaliadorViewSet, TrabalhoViewSet, TrabalhoAutorViewSet)
+                        AvaliadorViewSet, TrabalhoViewSet, TrabalhoAutorViewSet, SessaoViewSet,
+                        AvaliacaoViewSet, AvaliadorAvaliacaoViewSet)
 
 # DefaultRouter
 router = routers.DefaultRouter()
@@ -16,6 +17,9 @@ router.register(r'salas', SalaViewSet)
 router.register(r'avaliadores', AvaliadorViewSet)
 router.register(r'trabalhos', TrabalhoViewSet)
 router.register(r'trabalho_autores', TrabalhoAutorViewSet)
+router.register(r'sessoes', SessaoViewSet)
+router.register(r'avaliacoes', AvaliacaoViewSet)
+router.register(r'avaliador_avaliacao', AvaliadorAvaliacaoViewSet)
 
 # URLs
 urlpatterns = [
