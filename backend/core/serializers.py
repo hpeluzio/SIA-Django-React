@@ -52,7 +52,7 @@ class TrabalhoAutorSerializer(serializers.ModelSerializer):
 
 
 class TrabalhoSerializer(serializers.ModelSerializer):
-
+    departamento = DepartamentoSerializer()
     autores = TrabalhoAutorSerializer(many=True)
 
     class Meta:
