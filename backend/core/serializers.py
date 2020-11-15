@@ -37,25 +37,11 @@ class SalaSerializer(serializers.ModelSerializer):
 
 
 class AvaliadorSerializer(serializers.ModelSerializer):
+    departamento = DepartamentoSerializer()
 
     class Meta:
         model = Avaliador
         fields = '__all__'
-
-
-class TrabalhoSerializer(serializers.ModelSerializer):
-
-    # print([f.name for f in Trabalho._meta.fields])
-
-    # print(lista)
-
-    class Meta:
-        list_fields = [f.name for f in Trabalho._meta.fields]
-        list_fields.append('autores')
-        model = Trabalho
-        # fields = Trabalho.__dict__
-        fields = list_fields
-        depth = 1
 
 
 class TrabalhoAutorSerializer(serializers.ModelSerializer):
@@ -63,22 +49,34 @@ class TrabalhoAutorSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrabalhoAutor
         fields = '__all__'
-        depth = 1
 
 
-class SessaoSerializer(serializers.ModelSerializer):
+class TrabalhoSerializer(serializers.ModelSerializer):
+
+    autores = TrabalhoAutorSerializer(many=True)
 
     class Meta:
-        list_fields = [f.name for f in Sessao._meta.fields]
-        list_fields.append('avaliacoes')
-        model = Sessao
-        fields = list_fields
-        depth = 2
+        model = Trabalho
+        fields = '__all__'
 
 
 class AvaliacaoSerializer(serializers.ModelSerializer):
 
+    trabalho = TrabalhoSerializer()
+    avaliadores = AvaliadorSerializer(many=True)
+
     class Meta:
         model = Avaliacao
         fields = '__all__'
-        depth = 2
+
+
+class SessaoSerializer(serializers.ModelSerializer):
+
+    departamento = DepartamentoSerializer()
+    ano = AnoSerializer()
+    sala = SalaSerializer()
+    avaliacoes = AvaliacaoSerializer(many=True)
+
+    class Meta:
+        model = Sessao
+        fields = fields = '__all__'

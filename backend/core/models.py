@@ -83,9 +83,9 @@ class TrabalhoAutor(Base):
         Trabalho, related_name='autores', verbose_name='Trabalho', on_delete=models.CASCADE)
     autor = models.CharField('Autor', max_length=254)
 
-    class Meta:
-        verbose_name = 'Trabalho - Autor'
-        verbose_name_plural = 'Trabalho - Autores'
+    # class Meta:
+    #     verbose_name = 'TrabalhoAutor'
+    #     verbose_name_plural = 'TrabalhoAutores'
 
     def __str__(self):
         return f'{self.autor}'
@@ -113,13 +113,13 @@ class Sessao(Base):
         verbose_name_plural = 'Sessões'
 
     def __str__(self):
-        return f'{self.data}'
+        return f'{self.id} - {self.data} - {self.tipo}'
 
 
 class Avaliacao(Base):
     sessao = models.ForeignKey(
         Sessao, related_name='avaliacoes', verbose_name='Sessao', on_delete=models.CASCADE)
-    trabalho = models.ForeignKey(
+    trabalho = models.OneToOneField(
         Trabalho, verbose_name='Trabalho', on_delete=models.CASCADE)
     avaliadores = models.ManyToManyField(Avaliador)
 
