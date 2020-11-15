@@ -5,10 +5,10 @@ from core.serializers import UserSerializer, GroupSerializer
 
 from core.models import (Departamento, Ano, Sala,
                          Avaliador, Trabalho, TrabalhoAutor,
-                         Sessao, Avaliacao, AvaliadorAvaliacao)
+                         Sessao, Avaliacao)
 from core.serializers import (DepartamentoSerializer, AnoSerializer, SalaSerializer,
                               AvaliadorSerializer, TrabalhoSerializer, TrabalhoAutorSerializer, SessaoSerializer,
-                              AvaliacaoSerializer, AvaliadorAvaliacaoSerializer)
+                              AvaliacaoSerializer)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -61,8 +61,3 @@ class SessaoViewSet(viewsets.ModelViewSet):
 class AvaliacaoViewSet(viewsets.ModelViewSet):
     queryset = Avaliacao.objects.all()
     serializer_class = AvaliacaoSerializer
-
-
-class AvaliadorAvaliacaoViewSet(viewsets.ModelViewSet):
-    queryset = AvaliadorAvaliacao.objects.all()
-    serializer_class = AvaliadorAvaliacaoSerializer

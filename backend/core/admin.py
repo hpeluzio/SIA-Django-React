@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from core.models import (Departamento, Ano, Sala,
                          Avaliador, Trabalho, TrabalhoAutor, Sessao,
-                         Avaliacao, AvaliadorAvaliacao)
+                         Avaliacao)
 
 
 @admin.register(Departamento)
@@ -44,8 +44,3 @@ class SessaoAdmin(admin.ModelAdmin):
 @admin.register(Avaliacao)
 class AvaliacaoAdmin(admin.ModelAdmin):
     list_display = [f.name for f in Avaliacao._meta.fields]
-
-
-@admin.register(AvaliadorAvaliacao)
-class AvaliadorAvaliacaoAdmin(admin.ModelAdmin):
-    list_display = [f.name for f in AvaliadorAvaliacao._meta.fields]

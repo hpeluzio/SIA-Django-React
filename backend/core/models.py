@@ -50,8 +50,8 @@ class Avaliador(Base):
     nome = models.CharField('Nome', max_length=254)
     matricula = models.CharField('Matrícula', max_length=10)
     curso = models.CharField('Curso', max_length=254)
-    departamento_id = models.ForeignKey(
-        Departamento, verbose_name='Departamento_ID', on_delete=models.CASCADE)
+    departamento = models.ForeignKey(
+        Departamento, verbose_name='Departamento', on_delete=models.CASCADE)
     email = models.EmailField('E-mail', max_length=254)
     ativo = models.BooleanField('Ativo?', default=False)
 
@@ -69,18 +69,18 @@ class Trabalho(Base):
     orientador = models.CharField('Orientador', max_length=254)
     modalidade = models.CharField('Modalidade', max_length=254)
     area = models.CharField('Área', max_length=254)
-    departamento_id = models.ForeignKey(
-        Departamento, verbose_name='Departamento_ID', on_delete=models.CASCADE)
-    ano_id = models.ForeignKey(
-        Ano, verbose_name='Ano_ID', on_delete=models.CASCADE)
+    departamento = models.ForeignKey(
+        Departamento, verbose_name='Departamento', on_delete=models.CASCADE)
+    ano = models.ForeignKey(
+        Ano, verbose_name='Ano', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'TRABALHO_ID: {self.trabalho_id}'
 
 
 class TrabalhoAutor(Base):
-    trabalho_id = models.ForeignKey(
-        Trabalho, verbose_name='Trabalho_ID', on_delete=models.CASCADE)
+    trabalho = models.ForeignKey(
+        Trabalho, related_name='autores', verbose_name='Trabalho', on_delete=models.CASCADE)
     autor = models.CharField('Autor', max_length=254)
 
     class Meta:
@@ -101,12 +101,12 @@ class Sessao(Base):
     horariofim = models.TimeField(
         'Horário Fim', auto_now=False, auto_now_add=False)
     tipo = models.CharField('Tipo', max_length=1, choices=TIPO)
-    departamento_id = models.ForeignKey(
-        Departamento, verbose_name='Departamento_ID', on_delete=models.CASCADE)
-    ano_id = models.ForeignKey(
-        Ano, verbose_name='Ano_ID', on_delete=models.CASCADE)
-    sala_id = models.ForeignKey(
-        Sala, verbose_name='Sala_ID', on_delete=models.CASCADE)
+    departamento = models.ForeignKey(
+        Departamento, verbose_name='Departamento', on_delete=models.CASCADE)
+    ano = models.ForeignKey(
+        Ano, verbose_name='Ano', on_delete=models.CASCADE)
+    sala = models.ForeignKey(
+        Sala, verbose_name='Sala', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Sessão'
@@ -117,28 +117,15 @@ class Sessao(Base):
 
 
 class Avaliacao(Base):
-    sessao_id = models.ForeignKey(
-        Sessao, verbose_name='Avaliacao_ID', on_delete=models.CASCADE)
-    trabalho_id = models.ForeignKey(
-        Trabalho, verbose_name='Trabalho_ID', on_delete=models.CASCADE)
+    sessao = models.ForeignKey(
+        Sessao, related_name='avaliacoes', verbose_name='Sessao', on_delete=models.CASCADE)
+    trabalho = models.ForeignKey(
+        Trabalho, verbose_name='Trabalho', on_delete=models.CASCADE)
+    avaliadores = models.ManyToManyField(Avaliador)
 
     class Meta:
         verbose_name = 'Avaliação'
         verbose_name_plural = 'Avaliações'
 
     def __str__(self):
-        return f'Avaliação: {self.sessao_id} - {self.trabalho_id}'
-
-
-class AvaliadorAvaliacao(Base):
-    avaliador_id = models.ForeignKey(
-        Avaliador, verbose_name='Avaliador_ID', on_delete=models.CASCADE)
-    avaliacao_id = models.ForeignKey(
-        Avaliacao, verbose_name='Avaliacao_ID', on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Avaliador Avaliação'
-        verbose_name_plural = 'Avaliadores - Avaliações'
-
-    def __str__(self):
-        return f'Avaliação: {self.avaliador_id} - {self.avaliacao_id}'
+        return f'Avaliação: {self.sessao} - {self.trabalho}'

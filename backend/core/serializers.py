@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from core.models import (Departamento, Ano, Sala,
                          Avaliador, Trabalho, TrabalhoAutor,
-                         Sessao, Avaliacao, AvaliadorAvaliacao)
+                         Sessao, Avaliacao)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,8 +38,6 @@ class SalaSerializer(serializers.ModelSerializer):
 
 class AvaliadorSerializer(serializers.ModelSerializer):
 
-    departamento_id = DepartamentoSerializer()
-
     class Meta:
         model = Avaliador
         fields = '__all__'
@@ -47,48 +45,40 @@ class AvaliadorSerializer(serializers.ModelSerializer):
 
 class TrabalhoSerializer(serializers.ModelSerializer):
 
-    ano_id = AnoSerializer()
+    # print([f.name for f in Trabalho._meta.fields])
+
+    # print(lista)
 
     class Meta:
+        list_fields = [f.name for f in Trabalho._meta.fields]
+        list_fields.append('autores')
         model = Trabalho
-        fields = '__all__'
+        # fields = Trabalho.__dict__
+        fields = list_fields
+        depth = 1
 
 
 class TrabalhoAutorSerializer(serializers.ModelSerializer):
 
-    trabalho_id = TrabalhoSerializer()
-
     class Meta:
         model = TrabalhoAutor
         fields = '__all__'
+        depth = 1
 
 
 class SessaoSerializer(serializers.ModelSerializer):
 
-    departamento_id = DepartamentoSerializer()
-    ano_id = AnoSerializer()
-    sala_id = SalaSerializer()
-
     class Meta:
+        list_fields = [f.name for f in Sessao._meta.fields]
+        list_fields.append('avaliacoes')
         model = Sessao
-        fields = '__all__'
+        fields = list_fields
+        depth = 2
 
 
 class AvaliacaoSerializer(serializers.ModelSerializer):
 
-    sessao_id = SessaoSerializer()
-    trabalho_id = TrabalhoSerializer()
-
     class Meta:
         model = Avaliacao
         fields = '__all__'
-
-
-class AvaliadorAvaliacaoSerializer(serializers.ModelSerializer):
-
-    avaliador_id = AvaliadorSerializer()
-    avaliacao_id = AvaliacaoSerializer()
-
-    class Meta:
-        model = AvaliadorAvaliacao
-        fields = '__all__'
+        depth = 2
