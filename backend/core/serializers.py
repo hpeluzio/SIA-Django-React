@@ -62,7 +62,7 @@ class TrabalhoSerializer(serializers.ModelSerializer):
 
 class AvaliacaoSerializer(serializers.ModelSerializer):
 
-    trabalho = TrabalhoSerializer()
+    trabalho_identificador = TrabalhoSerializer()
     avaliadores = AvaliadorSerializer(many=True)
 
     class Meta:

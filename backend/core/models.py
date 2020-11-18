@@ -64,7 +64,8 @@ class Avaliador(Base):
 
 
 class Trabalho(Base):
-    trabalho_id = models.IntegerField('TRABALHO_ID', unique=True)
+    trabalho_identificador = models.IntegerField(
+        'TRABALHO_IDENTIFICADOR', unique=True)
     nome = models.CharField('Nome', max_length=254)
     orientador = models.CharField('Orientador', max_length=254)
     modalidade = models.CharField('Modalidade', max_length=254)
@@ -75,17 +76,17 @@ class Trabalho(Base):
         Ano, verbose_name='Ano', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'TRABALHO_ID: {self.trabalho_id}'
+        return f'TRABALHO_ID: {self.trabalho_identificador}'
 
 
 class TrabalhoAutor(Base):
-    trabalho = models.ForeignKey(
-        Trabalho, related_name='autores', verbose_name='Trabalho', on_delete=models.CASCADE)
+    trabalho_identificador = models.ForeignKey(
+        Trabalho, to_field='trabalho_identificador', related_name='autores', verbose_name='TRABALHO_IDENTIFICADOR', on_delete=models.CASCADE)
     autor = models.CharField('Autor', max_length=254)
 
-    # class Meta:
-    #     verbose_name = 'TrabalhoAutor'
-    #     verbose_name_plural = 'TrabalhoAutores'
+    class Meta:
+        verbose_name = 'Trabalho Autor'
+        verbose_name_plural = 'Trabalho Autores'
 
     def __str__(self):
         return f'{self.autor}'
@@ -119,8 +120,8 @@ class Sessao(Base):
 class Avaliacao(Base):
     sessao = models.ForeignKey(
         Sessao, related_name='avaliacoes', verbose_name='Sessao', on_delete=models.CASCADE)
-    trabalho = models.OneToOneField(
-        Trabalho, verbose_name='Trabalho', on_delete=models.CASCADE)
+    trabalho_identificador = models.OneToOneField(
+        Trabalho, to_field='trabalho_identificador', verbose_name='TRABALHO_IDENTIFICADOR', on_delete=models.CASCADE)
     avaliadores = models.ManyToManyField(Avaliador)
 
     class Meta:
@@ -128,4 +129,4 @@ class Avaliacao(Base):
         verbose_name_plural = 'Avaliações'
 
     def __str__(self):
-        return f'Avaliação: {self.sessao} - {self.trabalho}'
+        return f'Avaliação: {self.sessao} - {self.trabalho_identificador}'
