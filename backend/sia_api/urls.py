@@ -20,3 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('core.urls')),
 ]
+
+admin.site.site_header = 'SIA'
+admin.site.site_title = 'Evolua seu lado SIA'
+admin.site.index_title = 'Sistema de gerenciamento do SIA'
