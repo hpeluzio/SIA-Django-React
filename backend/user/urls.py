@@ -1,4 +1,4 @@
-"""sia_api URL Configuration
+"""api URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -13,19 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-# from rest_framework import routers
-from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import routers
 
+from .views import CustomUserViewSet
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('user.urls')),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    path('api/v1/', include('core.urls')),
-]
+router = routers.DefaultRouter()
+router.register(r'users', CustomUserViewSet)
 
-admin.site.site_header = 'SIA'
-admin.site.site_title = 'Evolua seu lado SIA'
-admin.site.index_title = 'Sistema de gerenciamento do SIA'
+urlpatterns = []
+
+urlpatterns += router.urls

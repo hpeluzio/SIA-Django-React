@@ -39,11 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third-Party Apps
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
 
-    'core'
+    # Local Apps
+    'user',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +168,6 @@ REST_FRAMEWORK = {
     #     'user': '1000/minute'
     # },
 }
+
+# AUTH_USER_MODEL
+AUTH_USER_MODEL = 'user.CustomUser'

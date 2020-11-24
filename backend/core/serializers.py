@@ -6,18 +6,6 @@ from core.models import (Departamento, Ano, Sala,
                          Sessao, Avaliacao)
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'groups']
-
-
-class GroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Group
-        fields = ['url', 'name']
-
-
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departamento
