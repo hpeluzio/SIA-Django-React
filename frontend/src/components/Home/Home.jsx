@@ -5,39 +5,15 @@ import { useAuth } from '../../store/AuthContext'
 
 function Home() {
     const { auth, setAuth } = useAuth()
-    const lorem =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-    const [lorens, setLorens] = useState([])
 
     return (
         <>
+            <h3>Home</h3>
+            <br />
             <div>Logado: {auth.logado ? 'Sim' : 'Nao'}</div>
             <br />
             <div>Token: {auth.token}</div>
             <br />
-            <Button
-                onClick={() => {
-                    var lor = [...lorens]
-                    lor.push(lorem)
-                    console.log(lor)
-                    setLorens(lor)
-                }}
-            >
-                ADD LOREM
-            </Button>
-            {lorens.map((lorem, idx) => {
-                return (
-                    <LoremDiv>
-                        <h3>
-                            <h5>
-                                <h3>Lorem {idx}:</h3> {lorem}{' '}
-                            </h5>
-                            <hr />
-                        </h3>
-                    </LoremDiv>
-                )
-            })}
-            <hr />
         </>
     )
 }

@@ -3,13 +3,18 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import { useViewport } from '../store/ViewportContext'
-
+import { useAuth } from '../store/AuthContext'
 import Hamburguer from './Hamburguer'
 
 const Header = () => {
     const { layout, toggle, setToggle } = useViewport()
+    const { auth, setAuth } = useAuth()
 
     const mobile = () => (layout === 'mobile' ? true : false)
+
+    const logout = () => {
+        setAuth({ logado: false, token: '' })
+    }
 
     return (
         <>
@@ -40,14 +45,19 @@ const Header = () => {
                 <RightHeader>
                     <Spacer />
 
-                    {!mobile() && (
+                    {!mobile() && auth.logado === false && (
                         <LinkHeader to="/register">
                             <div>Register</div>
                         </LinkHeader>
                     )}
-                    {!mobile() && (
+                    {!mobile() && auth.logado === false && (
                         <LinkHeader to="/login">
                             <div>Login</div>
+                        </LinkHeader>
+                    )}
+                    {!mobile() && auth.logado === true && (
+                        <LinkHeader onClick={logout} to="/login">
+                            <div>Logout</div>
                         </LinkHeader>
                     )}
                 </RightHeader>

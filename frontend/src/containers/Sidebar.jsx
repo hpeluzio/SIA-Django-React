@@ -7,10 +7,12 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import 'fontsource-roboto'
 
 import { useViewport } from '../store/ViewportContext'
+import { useAuth } from '../store/AuthContext'
 import profile from '../images/profile.png'
 
 const Sidebar = () => {
     const { layout, toggle, setToggle } = useViewport()
+    const { auth, setAuth } = useAuth()
 
     const mobile = () => (layout === 'mobile' ? true : false)
 
