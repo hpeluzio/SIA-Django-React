@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { useAuth } from '../store/AuthContext'
 import { useViewport } from '../store/ViewportContext'
 import contentBackground from '../images/background.jpg'
 import Login from '../components/Login/Login'
@@ -9,9 +10,11 @@ import Register from '../components/Register/Register'
 import Home from '../components/Home/Home'
 
 const Content = () => {
+    const { auth, setAuth } = useAuth()
     const { layout, toggle } = useViewport()
 
     const hideSidebar = () => {
+        if (auth.logado === false) return true
         if (layout === 'mobile' && toggle === true) return false
         if (layout === 'mobile' && toggle === false) return true
         if (layout === 'desktop' && toggle === true) return false

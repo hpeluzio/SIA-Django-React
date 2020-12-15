@@ -11,12 +11,13 @@ import { useAuth } from '../store/AuthContext'
 import profile from '../images/profile.png'
 
 const Sidebar = () => {
-    const { layout, toggle, setToggle } = useViewport()
     const { auth, setAuth } = useAuth()
+    const { layout, toggle, setToggle } = useViewport()
 
     const mobile = () => (layout === 'mobile' ? true : false)
 
     const hideSidebar = () => {
+        if (auth.logado === false) return true
         if (layout === 'mobile' && toggle === true) return false
         if (layout === 'mobile' && toggle === false) return true
         if (layout === 'desktop' && toggle === true) return false

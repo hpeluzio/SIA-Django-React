@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { useAuth } from '../../store/AuthContext'
+import { useViewport } from '../../store/ViewportContext'
 
 function Login() {
     // return <div>oi</div>
@@ -9,17 +10,11 @@ function Login() {
     const [data, setData] = useState([])
     const [username, setUsername] = useState('')
     const [pw, setPw] = useState('')
+    const { toggle, setToggle } = useViewport()
 
-    useEffect(() => {
-        // async function getSessoes() {
-        //     const response = await axios.get(
-        //         'http://127.0.0.1:8000/api/v1/sessoes/'
-        //     )
-        //     console.log(response.data)
-        //     setData(response.data)
-        // }
-        // getSessoes()
-    }, [])
+    // useEffect(() => {
+    //     setToggle(false)
+    // }, [])
 
     const formHandler = (e) => {
         e.preventDefault()
@@ -37,6 +32,7 @@ function Login() {
                         newAuthState.logado = true
                         newAuthState.token = response.data.token
                         setAuth(newAuthState)
+                        // setToggle(true)
                     }
                 })
                 .catch(function (error) {

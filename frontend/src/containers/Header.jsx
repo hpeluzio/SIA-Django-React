@@ -1,24 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import { useViewport } from '../store/ViewportContext'
 import { useAuth } from '../store/AuthContext'
 import Hamburguer from './Hamburguer'
+import Logout from './Logout'
 
 const Header = () => {
     const { layout, toggle, setToggle } = useViewport()
     const { auth, setAuth } = useAuth()
+    const [showLogoutModal, setShowLogoutModal] = useState(false)
 
     const mobile = () => (layout === 'mobile' ? true : false)
 
+    // const logout = () => {
+    //     setAuth({ logado: false, token: '' })
+    // }
     const logout = () => {
-        setAuth({ logado: false, token: '' })
+        // return <Logout></Logout>
+        setShowLogoutModal(!showLogoutModal)
     }
 
     return (
         <>
-            {mobile() === true && toggle === true && (
+            {showLogoutModal === true && <Logout logout={logout}></Logout>}
+            {auth.logado === true && mobile() === true && toggle === true && (
                 <Backwrap
                     onClick={() => {
                         setToggle(!toggle)
@@ -27,12 +34,13 @@ const Header = () => {
             )}
             <HeaderBar>
                 <LeftHeader>
-                    <Hamburguer
-                        layout={layout}
-                        toggle={toggle}
-                        setToggle={setToggle}
-                    />
-
+                    {auth.logado === true && (
+                        <Hamburguer
+                            layout={layout}
+                            toggle={toggle}
+                            setToggle={setToggle}
+                        />
+                    )}
                     <Spacer />
 
                     <Link to="/" className="logo_home">
@@ -45,17 +53,17 @@ const Header = () => {
                 <RightHeader>
                     <Spacer />
 
-                    {!mobile() && auth.logado === false && (
+                    {auth.logado === false && (
                         <LinkHeader to="/register">
                             <div>Register</div>
                         </LinkHeader>
                     )}
-                    {!mobile() && auth.logado === false && (
+                    {auth.logado === false && (
                         <LinkHeader to="/login">
                             <div>Login</div>
                         </LinkHeader>
                     )}
-                    {!mobile() && auth.logado === true && (
+                    {auth.logado === true && (
                         <LinkHeader onClick={logout} to="/login">
                             <div>Logout</div>
                         </LinkHeader>
