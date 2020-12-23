@@ -78,6 +78,7 @@ const LogoutBtn = styled.button`
     font-size: 15px;
     color: white;
     transition: 0.25s all ease-in-out;
+    cursor: pointer;
 
     :hover {
         background-color: green;

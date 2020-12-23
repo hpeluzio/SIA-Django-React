@@ -15,21 +15,22 @@ const Content = () => {
 
     const hideSidebar = () => {
         if (auth.logado === false) return true
-        if (layout === 'mobile' && toggle === true) return false
+        //Only here the content stay lefted (layout === 'mobile' && toggle === true)
+        if (layout === 'mobile' && toggle === true) return true
         if (layout === 'mobile' && toggle === false) return true
         if (layout === 'desktop' && toggle === true) return false
         if (layout === 'desktop' && toggle === false) return true
     }
 
     return (
-        <ContentContainer mobile={hideSidebar()}>
-            <div className="content-container">
-                <Switch>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/login" exact component={Login} />
-                    <Route path="/register" exact component={Register} />
-                </Switch>
-            </div>
+        <ContentContainer hideSidebar={hideSidebar()}>
+            {/* <div className="content-container"> */}
+            <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/login" exact component={Login} />
+                <Route path="/register" exact component={Register} />
+            </Switch>
+            {/* </div> */}
         </ContentContainer>
     )
 }
@@ -38,10 +39,12 @@ const ContentContainer = styled.div`
     position: fixed;
     z-index: 0;
     height: 93%;
-    width: ${(props) => !props.mobile && 'calc(100vw - var(--sidebar-width))'};
-    width: ${(props) => props.mobile && 'calc(100vw)'};
+    width: ${(props) =>
+        !props.hideSidebar && 'calc(100vw - var(--sidebar-width))'};
+    width: ${(props) => props.hideSidebar && 'calc(100vw)'};
     left: var(--sidebar-width);
-    left: ${(props) => props.mobile && '0'};
+    /* left: ${(props) => !props.hideSidebar && 'var(--sidebar-width)'}; */
+    left: ${(props) => props.hideSidebar && '0'};
     right: 0;
     top: var(--header-height);
     transition: 0.25s;

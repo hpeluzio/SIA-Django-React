@@ -33,6 +33,7 @@ const MenuToggle = styled.div`
 
     transition-property: all;
     transition-duration: 0.5s;
+    cursor: pointer;
 
     :hover {
         .one,
